@@ -1,78 +1,85 @@
 # AI Robot Arm Control Lab
 
-로봇로봇로봇 시뮬레이터
+로봇 팔의 기본 움직임을 Python으로 학습하기 위한 입문용 프로젝트입니다.
 
-A beginner-readable Python project for learning the basics of robotic arm motion.
+현재 프로젝트는 **2D 로봇 팔 시뮬레이터**와 **Trajectory Planning Simulator**를
+포함합니다. 두 개의 링크를 가진 평면 로봇 팔을 모델링하고, forward
+kinematics, inverse kinematics, waypoint 기반 경로 생성, joint angle 경로 변환,
+matplotlib 시각화를 다룹니다.
 
-The project currently includes a **Python 2D robotic arm simulator** and a
-software-only **trajectory planning simulator**. It models a simple two-link
-planar robot arm, calculates forward kinematics, solves inverse kinematics,
-plans cartesian paths through waypoints, converts those paths into joint angles,
-and visualizes the arm with matplotlib.
+## 프로젝트 단계
 
-## Project Phases
-
-- Phase 1: basic 2D robot arm simulator
+- Phase 1: 기본 2D 로봇 팔 시뮬레이터
 - Phase 1.5: trajectory planning simulator
 - Future Phase 2: PID control
 
-The current work focuses only on simulator and trajectory-planning foundations.
-It does not include PID control, AI, OpenCV, reinforcement learning, LeRobot, or
-hardware control yet.
+현재 단계에서는 시뮬레이터와 trajectory planning에만 집중합니다. 아직 PID 제어,
+AI, OpenCV, reinforcement learning, LeRobot, 하드웨어 제어는 포함하지 않습니다.
 
-## Future Roadmap
+## 앞으로의 로드맵
 
 - Phase 2: PID control
 - Phase 3: OpenCV object detection
 - Phase 4: simple AI policy model
 - Phase 5: LeRobot/SO-ARM101 extension
 
-## Installation
+## 설치 방법
 
-Create and activate a virtual environment:
+가상환경을 만들고 활성화합니다.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-Install the project dependencies:
+필요한 패키지를 설치합니다.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the Simulator
+## 기본 시뮬레이터 실행
 
-From the project root, run:
+프로젝트 루트에서 아래 명령어를 실행합니다.
 
 ```bash
 python scripts/run_simulator.py
 ```
 
-The script creates a two-link robot arm, moves it to a target point, and displays the result using matplotlib.
+이 스크립트는 두 링크 로봇 팔을 만들고, 목표 좌표로 이동한 결과를 matplotlib으로
+보여줍니다.
 
-The simulator window shows the base position, current end-effector position, and target position. You can type a new target `x` and `y` value in the input boxes, then press **Move** to move the arm.
+시뮬레이터 창에서는 base 위치, 현재 end-effector 위치, target 위치를 확인할 수
+있습니다. 입력창에 새로운 target `x`, `y` 값을 넣고 **Move** 버튼을 누르면 로봇
+팔이 해당 위치로 이동합니다.
 
-## Run the Trajectory Demo
+## Trajectory Demo 실행
 
-From the project root, run:
+프로젝트 루트에서 아래 명령어를 실행합니다.
 
 ```bash
 python scripts/run_trajectory_demo.py
 ```
 
-The demo creates a cartesian path through several waypoints, converts the path to
-joint angles, checks whether the end-effector path collides with a simple
-circular obstacle, and animates the arm following the planned trajectory.
+이 데모는 여러 waypoint를 연결해 cartesian path를 만들고, 그 경로를 joint angle
+path로 변환한 뒤 로봇 팔이 계획된 경로를 따라 움직이는 모습을 애니메이션으로
+보여줍니다.
 
-## Run Tests
+trajectory demo에서는 다음 기능을 확인할 수 있습니다.
 
-From the project root, run:
+- end-effector가 따라가는 경로 시각화
+- circular obstacle 충돌 여부 확인
+- `Retry` 버튼으로 애니메이션 다시 시작
+- `Stop` 버튼으로 애니메이션 정지
+- 현재 end-effector의 `x`, `y` 좌표 수치 표시
+
+## 테스트 실행
+
+프로젝트 루트에서 아래 명령어를 실행합니다.
 
 ```bash
 pytest
 ```
 
-The tests check forward kinematics, inverse kinematics, basic `RobotArm2D`
-behavior, trajectory planning, and simple obstacle checks.
+테스트는 forward kinematics, inverse kinematics, `RobotArm2D` 기본 동작,
+trajectory planning, obstacle check, trajectory animation UI를 확인합니다.
