@@ -83,7 +83,7 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
     fig, ax = plt.subplots(figsize=(7, 7))
     if fig.canvas.manager is not None:
         fig.canvas.manager.set_window_title("Trajectory Planning Simulator")
-    fig.subplots_adjust(bottom=0.18)
+    fig.subplots_adjust(right=0.72, bottom=0.18)
 
     max_reach = arm.link1 + arm.link2
     padding = 0.25
@@ -134,6 +134,15 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
 
     ax.legend(loc="upper right")
 
+    end_x_text = fig.text(
+        0.75,
+        0.22,
+        "",
+        fontsize=11,
+        family="monospace",
+        color="tab:green",
+    )
+
     def draw_frame(frame_index):
         positions = joint_positions_by_frame[frame_index]
         base = positions["base"]
@@ -145,6 +154,7 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
         arm_x_values = [base[0], elbow[0], end_effector[0]]
         arm_y_values = [base[1], elbow[1], end_effector[1]]
         arm_line.set_data(arm_x_values, arm_y_values)
+        end_x_text.set_text(f"End x: {end_effector[0]:.3f}")
 
         visible_path = end_effector_path[: frame_index + 1]
         path_x_values = [point[0] for point in visible_path]
@@ -179,6 +189,8 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
     stop_button.on_clicked(stop_animation)
     animation.retry_button = retry_button
     animation.stop_button = stop_button
+    animation.end_x_text = end_x_text
+    draw_frame(0)
 
     return animation
 

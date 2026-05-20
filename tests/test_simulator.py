@@ -48,3 +48,12 @@ def test_trajectory_animation_has_stop_button():
     assert animation.stop_button.label.get_text() == "Stop"
 
     plt.close(animation._fig)
+
+
+def test_trajectory_animation_shows_end_x_value():
+    arm = RobotArm2D(link1=1.0, link2=1.0)
+    animation = animate_joint_path(arm, [(0.0, 0.0), (0.2, 0.1)])
+
+    assert animation.end_x_text.get_text() == "End x: 2.000"
+
+    plt.close(animation._fig)
