@@ -142,6 +142,14 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
         family="monospace",
         color="tab:green",
     )
+    end_y_text = fig.text(
+        0.75,
+        0.17,
+        "",
+        fontsize=11,
+        family="monospace",
+        color="tab:green",
+    )
 
     def draw_frame(frame_index):
         positions = joint_positions_by_frame[frame_index]
@@ -155,6 +163,7 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
         arm_y_values = [base[1], elbow[1], end_effector[1]]
         arm_line.set_data(arm_x_values, arm_y_values)
         end_x_text.set_text(f"End x: {end_effector[0]:.3f}")
+        end_y_text.set_text(f"End y: {end_effector[1]:.3f}")
 
         visible_path = end_effector_path[: frame_index + 1]
         path_x_values = [point[0] for point in visible_path]
@@ -190,6 +199,7 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
     animation.retry_button = retry_button
     animation.stop_button = stop_button
     animation.end_x_text = end_x_text
+    animation.end_y_text = end_y_text
     draw_frame(0)
 
     return animation
