@@ -155,12 +155,17 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
 
     retry_button_ax = fig.add_axes([0.34, 0.05, 0.14, 0.06])
     retry_button = Button(retry_button_ax, "Retry")
+    stop_button_ax = fig.add_axes([0.52, 0.05, 0.14, 0.06])
+    stop_button = Button(stop_button_ax, "Stop")
 
     def retry_animation(_event=None):
         animation.frame_seq = animation.new_frame_seq()
         draw_frame(0)
         animation.event_source.start()
         fig.canvas.draw_idle()
+
+    def stop_animation(_event=None):
+        animation.event_source.stop()
 
     animation = FuncAnimation(
         fig,
@@ -171,7 +176,9 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
         repeat=False,
     )
     retry_button.on_clicked(retry_animation)
+    stop_button.on_clicked(stop_animation)
     animation.retry_button = retry_button
+    animation.stop_button = stop_button
 
     return animation
 
