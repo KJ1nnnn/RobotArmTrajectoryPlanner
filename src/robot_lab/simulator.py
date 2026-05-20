@@ -83,6 +83,7 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
     fig, ax = plt.subplots(figsize=(7, 7))
     if fig.canvas.manager is not None:
         fig.canvas.manager.set_window_title("Trajectory Planning Simulator")
+    fig.subplots_adjust(bottom=0.18)
 
     max_reach = arm.link1 + arm.link2
     padding = 0.25
@@ -152,6 +153,15 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
 
         return arm_line, path_line
 
+    retry_button_ax = fig.add_axes([0.34, 0.05, 0.14, 0.06])
+    retry_button = Button(retry_button_ax, "Retry")
+
+    def retry_animation(_event=None):
+        animation.frame_seq = animation.new_frame_seq()
+        draw_frame(0)
+        animation.event_source.start()
+        fig.canvas.draw_idle()
+
     animation = FuncAnimation(
         fig,
         draw_frame,
@@ -160,6 +170,8 @@ def animate_joint_path(arm, joint_path, target_path=None, obstacle=None):
         blit=False,
         repeat=False,
     )
+    retry_button.on_clicked(retry_animation)
+    animation.retry_button = retry_button
 
     return animation
 

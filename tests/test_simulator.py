@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import pytest
 
 from robot_lab.arm import RobotArm2D
-from robot_lab.simulator import RobotArmSimulator
+from robot_lab.simulator import RobotArmSimulator, animate_joint_path
 
 
 def test_interactive_simulator_moves_to_target_and_shows_positions():
@@ -30,3 +30,12 @@ def test_interactive_simulator_moves_to_target_and_shows_positions():
     assert "End :" in info_text
 
     plt.close(simulator.fig)
+
+
+def test_trajectory_animation_has_retry_button():
+    arm = RobotArm2D(link1=1.0, link2=1.0)
+    animation = animate_joint_path(arm, [(0.0, 0.0), (0.2, 0.1)])
+
+    assert animation.retry_button.label.get_text() == "Retry"
+
+    plt.close(animation._fig)
